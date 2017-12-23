@@ -44,11 +44,11 @@ namespace Mulion{
 				var newClientArea = (WinRectangle)bounds;
 
 				if(!GetWindowSizeForClientSize(ref newClientArea, windowStyle, 0, 0)){
-					throw new Exception($"Unable to determine correct window size for desired client area size ({GetErrorMessage(GetLastError())})");
+					throw new MulionException($"Unable to determine correct window size for desired client area size ({GetErrorMessage(GetLastError())})");
 				}
 
 				if(!SetWindowPosition(handle, IntPtr.Zero, newClientArea.Left, newClientArea.Top, newClientArea.Right - newClientArea.Left, newClientArea.Bottom - newClientArea.Top, 0)){
-					throw new Exception($"Unable to set window position ({GetErrorMessage(GetLastError())})");
+					throw new MulionException($"Unable to set window position ({GetErrorMessage(GetLastError())})");
 				}
 			}
 		}
@@ -70,7 +70,7 @@ namespace Mulion{
 				enabled = value;
 				
 				if(!SetWindowEnabled(handle, enabled)){
-					throw new Exception($"Unable to set window enabled state ({GetErrorMessage(GetLastError())})");
+					throw new MulionException($"Unable to set window enabled state ({GetErrorMessage(GetLastError())})");
 				}
 			}
 		}
@@ -82,7 +82,7 @@ namespace Mulion{
 				title = value;
 				
 				if(!SetWindowTitle(handle, title)){
-					throw new Exception($"Unable to set window title ({GetErrorMessage(GetLastError())})");
+					throw new MulionException($"Unable to set window title ({GetErrorMessage(GetLastError())})");
 				}
 			}
 		}
@@ -99,7 +99,7 @@ namespace Mulion{
 				boundsBeforeFullscreen = Bounds;
 
 				if(SetWindowLong(handle, LongValue.Style, (int)windowStyle) == 0){
-					throw new Exception($"Unable to set window fullscreen state ({GetErrorMessage(GetLastError())})");
+					throw new MulionException($"Unable to set window fullscreen state ({GetErrorMessage(GetLastError())})");
 				}
 
 				//Need to set full-screen bounds!!
@@ -115,7 +115,7 @@ namespace Mulion{
 				GenerateStyle();
 
 				if(SetWindowLong(handle, LongValue.Style, (int)windowStyle) == 0){
-					throw new Exception($"Unable to set window resizable state ({GetErrorMessage(GetLastError())})");
+					throw new MulionException($"Unable to set window resizable state ({GetErrorMessage(GetLastError())})");
 				}
 			}
 		}
@@ -152,7 +152,7 @@ namespace Mulion{
 			var atom = RegisterClass(ref info);
 
 			if(atom == 0){
-				throw new Exception($"Unable to create window class ({GetErrorMessage(GetLastError())})");
+				throw new MulionException($"Unable to create window class ({GetErrorMessage(GetLastError())})");
 			}
 
 			GenerateStyle();
@@ -160,12 +160,12 @@ namespace Mulion{
 			handle = CreateWindow(0, className, title, windowStyle, DefaultWindowPosition, DefaultWindowPosition, 0, 0, IntPtr.Zero, IntPtr.Zero, instance, IntPtr.Zero);
 
 			if(handle == IntPtr.Zero){
-				throw new Exception($"Unable to create window ({GetErrorMessage(GetLastError())})");
+				throw new MulionException($"Unable to create window ({GetErrorMessage(GetLastError())})");
 			}
 
 			var topLeft = new WinPoint();
 			if(!ClientToScreen(handle, ref topLeft)){
-				throw new Exception($"Unable to retrieve client are for window ({GetErrorMessage(GetLastError())})");
+				throw new MulionException($"Unable to retrieve client are for window ({GetErrorMessage(GetLastError())})");
 			}
 
 			var bottomRight = (WinPoint)(Point)Size;

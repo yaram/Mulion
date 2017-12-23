@@ -9,7 +9,7 @@ namespace Mulion{
 			if(GetMessage(out var message, IntPtr.Zero, 0, 0) != -1){
 				HandleMessage(message);
 			}else{
-				throw new Exception($"Error: {GetErrorMessage(GetLastError())}");
+				throw new MulionException($"Error: {GetErrorMessage(GetLastError())}");
 			}
 		}
 
@@ -18,7 +18,7 @@ namespace Mulion{
 				HandleMessage(message);
 			}
 
-			throw new Exception($"Error: {GetErrorMessage(GetLastError())}");
+			throw new MulionException($"Error: {GetErrorMessage(GetLastError())}");
 		}
 
 		private void HandleMessage(Message message){
