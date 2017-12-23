@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using static Mulion.Win32;
@@ -92,17 +92,25 @@ namespace Mulion{
 			get => fullscreen;
 
 			set{
-				fullscreen = value;
+				if(value != fullscreen){
+					fullscreen = value;
 
-				GenerateStyle();
+					GenerateStyle();
 
-				boundsBeforeFullscreen = Bounds;
+					if(fullscreen){
+						boundsBeforeFullscreen = Bounds;
+					}
 
-				if(SetWindowLong(handle, LongValue.Style, (int)windowStyle) == 0){
-					throw new MulionException($"Unable to set window fullscreen state ({GetErrorMessage(GetLastError())})");
+					if(SetWindowLong(handle, LongValue.Style, (int)windowStyle) == 0){
+						throw new MulionException($"Unable to set window fullscreen state ({GetErrorMessage(GetLastError())})");
+					}
+
+					if(fullscreen){
+						Bounds = new Rectangle(0, 0, GetSystemMetrics(SystemMetric.ScreenWidth), GetSystemMetrics(SystemMetric.ScreenHeight));
+					}else{
+						Bounds = boundsBeforeFullscreen;
+					}
 				}
-
-				//Need to set full-screen bounds!!
 			}
 		}
 		bool resizable;

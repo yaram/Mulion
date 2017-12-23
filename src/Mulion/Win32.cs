@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
@@ -49,6 +49,9 @@ namespace Mulion{
 
 		[DllImport("User32.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "RegisterClassExW")]
 		public static extern ushort RegisterClass(ref WindowClassInfo classInfo);
+
+		[DllImport("User32.dll", CallingConvention = CallingConvention.Winapi)]
+		public static extern int GetSystemMetrics(SystemMetric metric);
 
 		[DllImport("User32.dll", CallingConvention = CallingConvention.Winapi, EntryPoint = "DefWindowProcW")]
 		public static extern IntPtr DefaultWindowProcedure(IntPtr window, MessageType messageType, UIntPtr parameterA, IntPtr parameterB);
@@ -386,6 +389,11 @@ namespace Mulion{
 
 		public enum LongValue : int{
 			Style = -16
+		}
+
+		public enum SystemMetric : int{
+			ScreenWidth = 0,
+			ScreenHeight = 1,
 		}
 
 		[StructLayout(LayoutKind.Sequential)]
