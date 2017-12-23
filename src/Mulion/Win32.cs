@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
@@ -322,11 +322,11 @@ namespace Mulion{
 
 		public enum MessageType : uint{
 			Destroy = 0x0002,
+			Move = 0x0003,
 			Resize = 0x0005,
 			Paint = 0x000F,
 			Close = 0x0010,
 			Quit = 0x0012,
-			Move = 0x0047,
 			KeyDown = 0x0100,
 			KeyUp = 0x0101,
 			Character = 0x0102,
