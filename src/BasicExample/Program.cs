@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using Window;
+using Mulion;
 
 namespace BasicExample{
 	class Program{
