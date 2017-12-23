@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using static Mulion.Win32;
@@ -170,7 +170,7 @@ namespace Mulion{
 
 			var bottomRight = (WinPoint)(Point)Size;
 			if(!ClientToScreen(handle, ref bottomRight)){
-				throw new Exception($"Unable to retrieve client are for window ({GetErrorMessage(GetLastError())})");
+				throw new MulionException($"Unable to retrieve client are for window ({GetErrorMessage(GetLastError())})");
 			}
 
 			bounds = new Rectangle((Point)topLeft, (Size)(Point)bottomRight - (Size)(Point)topLeft);
