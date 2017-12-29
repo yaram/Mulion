@@ -1,5 +1,4 @@
 using System;
-using static Mulion.Win32;
 
 namespace Mulion{
 	public class EventLoop{
