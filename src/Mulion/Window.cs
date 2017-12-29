@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using static Mulion.Win32;
@@ -83,7 +83,7 @@ namespace Mulion{
 			backend.KeyDown = (key) => KeyDown?.Invoke(key);
 			backend.KeyUp = (key) => KeyUp?.Invoke(key);
 
-			backend.MouseMove = (old, @new) => MouseMove(old, @new);
+			backend.MouseMove = (old, @new) => MouseMove?.Invoke(old, @new);
 		}
 	}
 }
