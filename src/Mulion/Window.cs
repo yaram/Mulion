@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using static Mulion.Win32;
@@ -72,38 +72,18 @@ namespace Mulion{
 			}else{
 				throw new MulionException("No suitable window backend found");
 			}
-		}
 
-		void OnMove(){
-			Move?.Invoke();
-		}
+			backend.Move = () => Move?.Invoke();
+			backend.Resize = () => Resize?.Invoke();
+			backend.Close = () => Close?.Invoke();
 
-		void OnResize(){
-			Resize?.Invoke();
-		}
+			backend.MouseDown = (button) => MouseDown?.Invoke(button);
+			backend.MouseUp = (button) => MouseUp?.Invoke(button);
 
-		void OnClose(){
-			Close?.Invoke();
-		}
+			backend.KeyDown = (key) => KeyDown?.Invoke(key);
+			backend.KeyUp = (key) => KeyUp?.Invoke(key);
 
-		void OnMouseDown(int button){
-			MouseDown?.Invoke(button);
-		}
-
-		void OnMouseUp(int button){
-			MouseUp?.Invoke(button);
-		}
-
-		void OnKeyDown(Key key){
-			KeyDown?.Invoke(key);
-		}
-
-		void OnKeyUp(Key key){
-			KeyUp?.Invoke(key);
-		}
-
-		void OnMouseMove(Point old, Point @new){
-			MouseMove?.Invoke(old, @new);
+			backend.MouseMove = (old, @new) => MouseMove(old, @new);
 		}
 	}
 }
