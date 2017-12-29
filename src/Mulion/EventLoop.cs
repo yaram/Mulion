@@ -7,6 +7,10 @@ namespace Mulion{
 
 		public EventLoop(){
 			IEventLoopBackend GetBackend(){
+				if(Environment.OSVersion.Platform == PlatformID.Win32NT){
+					return new Windows.EventLoopBackend();
+				}
+
 				throw new MulionException("No suitable event loop backend found");
 			}
 
