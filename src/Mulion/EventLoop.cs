@@ -4,36 +4,28 @@ using static Mulion.Win32;
 namespace Mulion{
 	public class EventLoop{
 		public event Action Quit;
+		IEventLoopBackend backend;
+
+		public EventLoop(){
+			IEventLoopBackend GetBackend(){
+				throw new MulionException("No suitable event loop backend found");
+			}
+
+			backend = GetBackend();
+
+			backend.Quit = () => Quit?.Invoke();
+		}
 
 		public void PollEvents(){
-			if(GetMessage(out var message, IntPtr.Zero, 0, 0) != -1){
-				HandleMessage(message);
-			}else{
-				throw new MulionException($"Error: {GetErrorMessage(GetLastError())}");
-			}
+			backend.PollEvents();
 		}
 
 		public void RunForever(){
-			while(GetMessage(out var message, IntPtr.Zero, 0, 0) != -1){
-				HandleMessage(message);
-			}
-
-			throw new MulionException($"Error: {GetErrorMessage(GetLastError())}");
-		}
-
-		private void HandleMessage(Message message){
-			TranslateMessage(ref message);
-			DispatchMessage(ref message);
-
-			switch(message.Type){
-				case MessageType.Quit:
-					Quit?.Invoke();
-					break;
-			}
+			backend.RunForever();
 		}
 
 		public void OnQuit(){
-			PostQuitMessage(0);
+			backend.OnQuit();
 		}
 	}
 }
