@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using static Mulion.Win32;
@@ -67,8 +67,8 @@ namespace Mulion{
 		}
 
 		public Window(){
-			if(/* Window backend checks */){
-				
+			if(Environment.OSVersion.Platform == PlatformID.Win32NT){
+				backend = new Windows.WindowBackend();
 			}else{
 				throw new MulionException("No suitable window backend found");
 			}
