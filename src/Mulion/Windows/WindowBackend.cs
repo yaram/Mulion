@@ -1,7 +1,7 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using static Mulion.Win32;
+using static Mulion.Windows.Win32;
 
 namespace Mulion.Windows{
 	public class WindowBackend : IWindowBackend, IDisposable{

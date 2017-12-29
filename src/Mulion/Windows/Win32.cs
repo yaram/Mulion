@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace Mulion{
+namespace Mulion.Windows{
 	public static class Win32{
 		public static readonly int DefaultWindowPosition = unchecked((int)0x80000000);
 		public static readonly uint InfiniteTimeout = 0xFFFFFFFF;
