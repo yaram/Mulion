@@ -118,14 +118,14 @@ namespace Mulion.Windows{
 			}
 		}
 		
-		public Action Move{get; set;}
-		public Action Resize{get; set;}
-		public Action Close{get; set;}
-		public Action<int> MouseDown{get; set;}
-		public Action<int> MouseUp{get; set;}
-		public Action<Key> KeyDown{get; set;}
-		public Action<Key> KeyUp{get; set;}
-		public Action<Point, Point> MouseMove{get; set;}
+		public Action Move{private get; set;}
+		public Action Resize{private get; set;}
+		public Action Close{private get; set;}
+		public Action<int> MouseDown{private get; set;}
+		public Action<int> MouseUp{private get; set;}
+		public Action<Key> KeyDown{private get; set;}
+		public Action<Key> KeyUp{private get; set;}
+		public Action<Point, Point> MouseMove{private get; set;}
 
 		public WindowBackend(){
 			instance = GetModuleHandle(null);
