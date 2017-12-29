@@ -15,13 +15,13 @@ namespace Mulion{
 
 		Rectangle Bounds{get; set;}
 		
-		Action Move{get; set;}
-		Action Resize{get; set;}
-		Action Close{get; set;}
-		Action<int> MouseDown{get; set;}
-		Action<int> MouseUp{get; set;}
-		Action<Key> KeyDown{get; set;}
-		Action<Key> KeyUp{get; set;}
-		Action<Point, Point> MouseMove{get; set;}
+		Action Move{set;}
+		Action Resize{set;}
+		Action Close{set;}
+		Action<int> MouseDown{set;}
+		Action<int> MouseUp{set;}
+		Action<Key> KeyDown{set;}
+		Action<Key> KeyUp{set;}
+		Action<Point, Point> MouseMove{set;}
 	}
 }
