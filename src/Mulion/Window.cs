@@ -67,11 +67,15 @@ namespace Mulion{
 		}
 
 		public Window(){
-			if(Environment.OSVersion.Platform == PlatformID.Win32NT){
-				backend = new Windows.WindowBackend();
-			}else{
+			IWindowBackend GetBackend(){
+				if(Environment.OSVersion.Platform == PlatformID.Win32NT){
+					return new Windows.WindowBackend();
+				}
+
 				throw new MulionException("No suitable window backend found");
 			}
+
+			backend = GetBackend();
 
 			backend.Move = () => Move?.Invoke();
 			backend.Resize = () => Resize?.Invoke();
