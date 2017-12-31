@@ -65,7 +65,7 @@ namespace Mulion{
 			set => Bounds = new Rectangle(Bounds.Location, value);
 		}
 
-		public Window(){
+		public Window(EventLoop eventLoop){
 			IWindowBackend GetBackend(){
 				if(Environment.OSVersion.Platform == PlatformID.Win32NT){
 					return new Windows.WindowBackend();
