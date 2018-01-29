@@ -9,7 +9,7 @@ namespace BasicExample{
 
 			eventLoop.Quit += () => Environment.Exit(0);
 
-			var window = new Window{
+			var window = new Window(eventLoop){
 				Title = "Derp",
 				Size = new Size(640, 480)
 			};
