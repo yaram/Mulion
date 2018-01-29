@@ -1,11 +1,10 @@
 using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Mulion{
-	public class Window{
-		IWindowBackend backend;
-		
+	public abstract class Window{
 		public event Action Move;
 		public event Action Resize;
 		public event Action Close;
@@ -14,79 +13,61 @@ namespace Mulion{
 		public event Action<Key> KeyDown;
 		public event Action<Key> KeyUp;
 		public event Action<Point, Point> MouseMove;
-
-		IntPtr NativeHandle => backend.NativeHandle;
 		
-		public string Title{
-			get => backend.Title;
+		public abstract string Title{get;}
 
-			set => backend.Title = value;
+		public abstract bool Enabled{get;}
+		public abstract bool Visible{get;}
+		public abstract bool Closed{get;}
+		public abstract bool Fullscreen{get;}
+		public abstract bool Resizable{get;}
+
+		public abstract Rectangle Bounds{get;}
+		public abstract Point Location{get;}
+		public abstract Size Size{get;}
+
+		public abstract Task SetTitle(string title);
+
+		public abstract Task SetEnabled(bool enabled);
+		public abstract Task SetVisible(bool visible);
+		public abstract Task SetClosed(bool closed);
+		public abstract Task SetFullscreen(bool fullscreen);
+		public abstract Task SetResizable(bool resizable);
+
+		public abstract Task SetBounds(Rectangle bounds);
+		public abstract Task SetLocation(Point location);
+		public abstract Task SetSize(Size size);
+
+		protected void OnMove(){
+			Move?.Invoke();
 		}
 
-		public bool Enabled{
-			get => backend.Enabled;
-
-			set => backend.Enabled = value;
-		}
-		public bool Visible{
-			get => backend.Visible;
-
-			set => backend.Visible = value;
-		}
-		public bool Closed{
-			get => backend.Closed;
-
-			set => backend.Closed = value;
-		}
-		public bool Fullscreen{
-			get => backend.Fullscreen;
-
-			set => backend.Fullscreen = value;
-		}
-		public bool Resizable{
-			get => backend.Resizable;
-
-			set => backend.Resizable = value;
+		protected void OnResize(){
+			Resize?.Invoke();
 		}
 
-		public Rectangle Bounds{
-			get => backend.Bounds;
-
-			set => backend.Bounds = value;
-		}
-		public Point Location{
-			get => Bounds.Location;
-
-			set => Bounds = new Rectangle(value, Bounds.Size);
-		}
-		public Size Size{
-			get => Bounds.Size;
-
-			set => Bounds = new Rectangle(Bounds.Location, value);
+		protected void OnClose(){
+			Close?.Invoke();
 		}
 
-		public Window(EventLoop eventLoop){
-			IWindowBackend GetBackend(){
-				if(Environment.OSVersion.Platform == PlatformID.Win32NT){
-					return new Windows.WindowBackend();
-				}
+		protected void OnMouseDown(int button){
+			MouseDown?.Invoke(button);
+		}
 
-				throw new MulionException("No suitable window backend found");
-			}
+		protected void OnMouseUp(int button){
+			MouseUp?.Invoke(button);
+		}
 
-			backend = GetBackend();
+		protected void OnKeyDown(Key key){
+			KeyDown?.Invoke(key);
+		}
 
-			backend.Move = () => Move?.Invoke();
-			backend.Resize = () => Resize?.Invoke();
-			backend.Close = () => Close?.Invoke();
+		protected void OnKeyUp(Key key){
+			KeyUp?.Invoke(key);
+		}
 
-			backend.MouseDown = (button) => MouseDown?.Invoke(button);
-			backend.MouseUp = (button) => MouseUp?.Invoke(button);
-
-			backend.KeyDown = (key) => KeyDown?.Invoke(key);
-			backend.KeyUp = (key) => KeyUp?.Invoke(key);
-
-			backend.MouseMove = (old, @new) => MouseMove?.Invoke(old, @new);
+		protected void OnMouseMove(Point old, Point @new){
+			MouseMove?.Invoke(old, @new);
 		}
 	}
 }
