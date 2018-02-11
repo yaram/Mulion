@@ -1,34 +1,18 @@
 using System;
+using System.Threading.Tasks;
 
 namespace Mulion{
-	public class EventLoop{
-		public event Action Quit;
-		IEventLoopBackend backend;
-
-		public EventLoop(){
-			IEventLoopBackend GetBackend(){
-				if(Environment.OSVersion.Platform == PlatformID.Win32NT){
-					return new Windows.EventLoopBackend();
-				}
-
-				throw new MulionException("No suitable event loop backend found");
-			}
-
-			backend = GetBackend();
-
-			backend.Quit = () => Quit?.Invoke();
+	public abstract class EventLoop{
+		public static Task<EventLoop> Create(){
+			throw new MulionException("No suitable event loop backend found");
 		}
 
-		public void PollEvents(){
-			backend.PollEvents();
-		}
+		public abstract Task<Window> CreateWindow();
 
-		public void RunForever(){
-			backend.RunForever();
-		}
+		public abstract void PollEvents();
 
-		public void OnQuit(){
-			backend.OnQuit();
-		}
+		public abstract void RunForever();
+
+		public abstract void Quit();
 	}
 }
