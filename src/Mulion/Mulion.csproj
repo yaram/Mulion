@@ -1,5 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Mulion</PackageId>
+    <Title>Mulion</Title>
+    <Authors>Yaram</Authors>
+    <PackageTags>window</PackageTags>
+    <Description>Cross-platform window creation and management library targeting .NET Standard</Description>
+    <Copyright>Copyright © Wayde Reitsma 2018. All rights reserved</Copyright>
+    <PackageProjectUrl>https://www.github.com/Yaram/Mulion</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MIT</PackageLicenseUrl>
+    <Version>0.1.0</Version>
   </PropertyGroup>
 </Project>
