@@ -15,7 +15,7 @@ namespace Mulion.Windows{
 
 		IntPtr handle;
 		IntPtr instance;
-		public IntPtr NativeHandle => handle;
+		public override IntPtr NativeHandle => handle;
 
 		bool closed;
 		public override bool Closed => closed;

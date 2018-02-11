@@ -13,6 +13,8 @@ namespace Mulion{
 		public event Action<Key> KeyDown;
 		public event Action<Key> KeyUp;
 		public event Action<Point, Point> MouseMove;
+
+		public abstract IntPtr NativeHandle{get;}
 		
 		public abstract string Title{get;}
 
