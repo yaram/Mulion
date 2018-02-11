@@ -1,11 +1,14 @@
 using System;
+using System.Threading.Tasks;
 using static Mulion.Windows.Win32;
 
 namespace Mulion.Windows{
-	class EventLoopBackend : IEventLoopBackend{
-		public Action Quit{private get; set;}
+	class Win32EventLoop : EventLoop{
+		public override Task<Window> CreateWindow(){
+			return Task.FromResult<Window>(new Win32Window());
+		}
 
-		public void PollEvents(){
+		public override void PollEvents(){
 			if(GetMessage(out var message, IntPtr.Zero, 0, 0) != -1){
 				HandleMessage(message);
 			}else{
@@ -13,7 +16,7 @@ namespace Mulion.Windows{
 			}
 		}
 
-		public void RunForever(){
+		public override void RunForever(){
 			while(GetMessage(out var message, IntPtr.Zero, 0, 0) != -1){
 				HandleMessage(message);
 			}
@@ -25,14 +28,12 @@ namespace Mulion.Windows{
 			TranslateMessage(ref message);
 			DispatchMessage(ref message);
 
-			switch(message.Type){
-				case MessageType.Quit:
-					Quit?.Invoke();
-					break;
+			if(message.Type == MessageType.Quit){
+				OnQuit();
 			}
 		}
 
-		public void OnQuit(){
+		public override void PostQuit(){
 			PostQuitMessage(0);
 		}
 	}
