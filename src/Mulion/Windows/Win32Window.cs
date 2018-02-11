@@ -195,9 +195,7 @@ namespace Mulion.Windows{
 		}
 
 		public override Task SetVisible(bool visible){
-			if(!ShowWindow(handle, visible)){
-				throw new MulionException($"Unable to set window visible state ({GetErrorMessage(GetLastError())})");
-			}
+			ShowWindow(handle, visible);
 
 			this.visible = visible;
 
