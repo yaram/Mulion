@@ -1,3 +1,4 @@
+[![nuget](https://img.shields.io/nuget/v/Mulion.svg)](https://www.nuget.org/packages/Mulion)
 # Mulion
 A window creation and management library targeting .NET Standard
 
