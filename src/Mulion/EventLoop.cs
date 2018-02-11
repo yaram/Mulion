@@ -4,6 +4,8 @@ using Mulion.Windows;
 
 namespace Mulion{
 	public abstract class EventLoop{
+		public event Action Quit;
+
 		public static Task<EventLoop> Create(){
 			if(Environment.OSVersion.Platform == PlatformID.Win32NT){
 				return Task.FromResult<EventLoop>(new Win32EventLoop());
@@ -18,6 +20,10 @@ namespace Mulion{
 
 		public abstract void RunForever();
 
-		public abstract void Quit();
+		public abstract void PostQuit();
+
+		protected void OnQuit(){
+			Quit?.Invoke();
+		}
 	}
 }

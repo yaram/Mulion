@@ -27,9 +27,13 @@ namespace Mulion.Windows{
 		private void HandleMessage(Message message){
 			TranslateMessage(ref message);
 			DispatchMessage(ref message);
+
+			if(message.Type == MessageType.Quit){
+				OnQuit();
+			}
 		}
 
-		public override void Quit(){
+		public override void PostQuit(){
 			PostQuitMessage(0);
 		}
 	}
