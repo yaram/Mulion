@@ -5,18 +5,17 @@ using Mulion;
 namespace BasicExample{
 	class Program{
 		static void Main(){
-			var eventLoop = new EventLoop();
+			var eventLoop = EventLoop.Create().Result;
 
 			eventLoop.Quit += () => Environment.Exit(0);
 
-			var window = new Window(eventLoop){
-				Title = "Derp",
-				Size = new Size(640, 480)
-			};
+			var window = eventLoop.CreateWindow().Result;
+			window.SetTitle("Test");
+			window.SetSize(new Size(640, 480));
 
-			window.Close += eventLoop.OnQuit;
+			window.Close += eventLoop.PostQuit;
 
-			window.Visible = true;
+			window.SetVisible(true).Wait();
 
 			eventLoop.RunForever();
 		}
